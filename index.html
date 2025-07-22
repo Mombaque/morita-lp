@@ -102,6 +102,53 @@
       font-weight: bolder;
       color: white;
     }
+    .carousel {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 400px;
+      margin: 0 auto 10px;
+      overflow: hidden;
+    }
+
+    .carousel-img {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .carousel-img.active {
+      display: block;
+    }
+
+    .carousel button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 4px;
+      z-index: 1;
+    }
+
+    .carousel button:hover {
+      background-color: rgba(255,255,255,0.4);
+    }
+
+    .carousel .prev {
+      left: 10px;
+    }
+
+    .carousel .next {
+      right: 10px;
+    }
+
   </style>
 </head>
 <body>
@@ -118,9 +165,9 @@
         treino ou competição.
       </p>
       <div class="social-buttons">
-        <a class="button whatsapp" href="https://wa.me/5515981079332" target="_blank" aria-label="WhatsApp Morita Fitness">
+        <a class="button whatsapp" href="https://wa.me/c/5515981079332" target="_blank" aria-label="WhatsApp Morita Fitness">
           <i class="fas fa-phone"></i>
-           WhatsApp
+           WhatsApp / Catálogo
         </a>
         <a class="button instagram" href="https://www.instagram.com/morita.fitness/" target="_blank" aria-label="Instagram Morita Fitness">
           <i class="fab fa-instagram"></i>
@@ -137,53 +184,96 @@
   <footer>Rua Nogueira Padilha, 429 - Sorocaba, SP</footer>
 
   <script>
-    const produtos = [
-      {
-        nome: "Kimono Adulto Masculino",
-        alt: "Kimono Adulto Masculino In The Guard",
-        descricao: "Modelos leves, resistentes e aprovados para campeonatos. Diversos tamanhos e cores.",
-        img: "/images/kimono/adulto/chumbo-masculino.png",
-      },
-      {
-        nome: "Kimono Adulto Feminino",
-        alt: "kimono adulto feminino In The Guard",
-        descricao: "Desenvolvido para o corpo feminino, combina conforto, durabilidade e liberdade de movimento para treinos e competições.",
-        img: "/images/kimono/adulto/branco-feminino.png",
-      },
-      {
-        nome: "Rashguard Masculina",
-        alt: "Rashguard masculina In The Guard",
-        descricao: "Roupas térmicas com proteção UV, tecido tecnológico e compressão ideal para o grappling.",
-        img: "/images/rashguard/samurai.png",
-      },
-      {
-        nome: "Rashguard Feminina",
-        alt: "Rashguard feminina In The Guard",
-        descricao: "Modelos ajustados ao corpo feminino, com tecido tecnológico que garante compressão, proteção UV e conforto durante o treino.",
-        img: "/images/rashguard/feminina.png",
-      },
-      {
-        nome: "Kimono Infantil",
-        alt: "Kimono Infantil In The Guard",
-        descricao: "Conforto e mobilidade para os pequenos atletas. Ideal para treinos e iniciação.",
-        img: "/images/kimono/infantil.jpeg",
-      },      
-    ];
+  const produtos = [
+    {
+      nome: "Kimono Adulto Masculino",
+      alt: "Kimono Adulto Masculino In The Guard",
+      descricao: "Modelos leves, resistentes e aprovados para campeonatos. Diversos tamanhos e cores.",
+      imagens: [
+        "/images/kimono/adulto/chumbo-masculino.png",
+        "/images/kimono/adulto/azul-masculino.png",
+        "/images/kimono/adulto/branco-masculino.png",
+      ]
+    },
+    {
+      nome: "Kimono Adulto Feminino",
+      alt: "Kimono Adulto Feminino In The Guard",
+      descricao: "Desenvolvido para o corpo feminino, combina conforto, durabilidade e liberdade de movimento para treinos e competições.",
+      imagens: [
+        "/images/kimono/adulto/branco-feminino.png",
+      ]
+    },
+    {
+      nome: "Rashguard Masculina",
+      alt: "Rashguard masculina In The Guard",
+      descricao: "Roupas térmicas com proteção UV, tecido tecnológico e compressão ideal para o grappling.",
+      imagens: [
+        "/images/rashguard/masculina1.png",
+        "/images/rashguard/masculina2.png"
+      ]
+    },
+    {
+      nome: "Rashguard Feminina",
+      alt: "Rashguard feminina In The Guard",
+      descricao: "Modelos ajustados ao corpo feminino, com tecido tecnológico que garante compressão, proteção UV e conforto durante o treino.",
+      imagens: [
+        "/images/rashguard/feminina1.png",
+        "/images/rashguard/feminina2.png"
+      ]
+    },
+    {
+      nome: "Kimono Infantil",
+      alt: "Kimono Infantil In The Guard",
+      descricao: "Conforto e mobilidade para os pequenos atletas. Ideal para treinos e iniciação.",
+      imagens: [
+        "/images/kimono/infantil.jpeg"
+      ]
+    }
+  ];
 
-    const container = document.getElementById("products");
-    let html = "";
+  const container = document.getElementById("products");
 
-    produtos.forEach((p) => {
-      html += `
-        <div class="product">
-          <img class="gallery-img" src="${p.img}" alt="${p.alt}"/>
-          <h3>${p.nome}</h3>
-          <p>${p.descricao}</p>
-        </div>
+  produtos.forEach((p, index) => {
+    const productDiv = document.createElement("div");
+    productDiv.className = "product";
+
+    const carouselId = `carousel-${index}`;
+    let carouselImgs = "";
+    p.imagens.forEach((img, i) => {
+      carouselImgs += `
+        <img src="${img}" alt="${p.alt}" class="carousel-img ${i === 0 ? "active" : ""}" data-index="${i}">
       `;
     });
 
-    container.innerHTML = html;
-  </script>
+    productDiv.innerHTML = `
+      <div class="carousel" id="${carouselId}">
+        ${carouselImgs}
+        <button class="prev" onclick="prevImage(${index})">&#10094;</button>
+        <button class="next" onclick="nextImage(${index})">&#10095;</button>
+      </div>
+      <h3>${p.nome}</h3>
+      <p>${p.descricao}</p>
+    `;
+
+    container.appendChild(productDiv);
+  });
+
+  function nextImage(prodIndex) {
+    const imgs = document.querySelectorAll(`#carousel-${prodIndex} .carousel-img`);
+    let current = [...imgs].findIndex(img => img.classList.contains("active"));
+    imgs[current].classList.remove("active");
+    let next = (current + 1) % imgs.length;
+    imgs[next].classList.add("active");
+  }
+
+  function prevImage(prodIndex) {
+    const imgs = document.querySelectorAll(`#carousel-${prodIndex} .carousel-img`);
+    let current = [...imgs].findIndex(img => img.classList.contains("active"));
+    imgs[current].classList.remove("active");
+    let prev = (current - 1 + imgs.length) % imgs.length;
+    imgs[prev].classList.add("active");
+  }
+</script>
+
 </body>
 </html>
