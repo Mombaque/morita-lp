@@ -1,5 +1,5 @@
-const pathKimono = 'images/kimono/';
-const pathRashguard = 'images/rashguard/';
+const pathKimono = 'public/images/kimono/';
+const pathRashguard = 'public/images/rashguard/';
 
 const produtos = [
     {
