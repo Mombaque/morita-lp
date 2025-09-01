@@ -45,20 +45,25 @@ const produtos = [
       descricao: "Modelos ajustados ao corpo feminino, com tecido tecnológico que garante compressão, proteção UV e conforto durante o treino.",
       imagens: [
         pathRashguard + "feminina1.png",
-        pathRashguard + "feminina2.png"
+        pathRashguard + "feminina2.png",
+        pathRashguard + "feminina3.jpeg",
+        pathRashguard + "feminina4.jpeg",
       ]
     },
   ];
 
 const container = document.getElementById("products");
 
-produtos.forEach((p, index) => {
+shuffle(produtos).forEach((p, index) => {
     const productDiv = document.createElement("div");
     productDiv.className = "product";
 
     const carouselId = `carousel-${index}`;
+
+    const imagens = shuffle([...p.imagens]);
+
     let carouselImgs = "";
-    p.imagens.forEach((img, i) => {
+    imagens.forEach((img, i) => {
       carouselImgs += `
         <img src="${img}" alt="${p.alt}" class="carousel-img ${i === 0 ? "active" : ""}" data-index="${i}">
       `;
@@ -76,6 +81,14 @@ produtos.forEach((p, index) => {
 
     container.appendChild(productDiv);
 });
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 function getImage(prodIndex, isNext) {
     const imgs = document.querySelectorAll(`#carousel-${prodIndex} .carousel-img`);
