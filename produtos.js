@@ -1,7 +1,16 @@
 const pathKimono = 'public/images/kimono/';
 const pathRashguard = 'public/images/rashguard/';
+const pathFaixas = 'public/images/faixas/';
 
 const produtos = [
+    {
+      nome: "Faixas de Jiu-Jitsu",
+      alt: "Faixas jiu-jitsu",
+      descricao: "Todas as cores e tamanhos! Modelos para adultos e crianças, com costura reforçada.",
+      imagens: [
+        pathFaixas + "1.jpg",
+      ]
+    },
     {
       nome: "Kimono Infantil",
       alt: "Kimono Infantil In The Guard",
