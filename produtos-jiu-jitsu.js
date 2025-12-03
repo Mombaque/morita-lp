@@ -1,6 +1,6 @@
-const pathKimono = 'public/images/kimono/';
-const pathRashguard = 'public/images/rashguard/';
-const pathFaixas = 'public/images/faixas/';
+const pathKimono = '../public/images/kimono/';
+const pathRashguard = '../public/images/rashguard/';
+const pathFaixas = '../public/images/faixas/';
 
 const produtos = [
     {
