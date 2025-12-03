@@ -120,10 +120,10 @@ body {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background-color: rgba(255,255,255,0.2);
-      color: white;
+      background-color: rgba(60, 60, 62, 0.2);
+      color: rgb(244, 244, 244);
       border: none;
-      font-size: 24px;
+      font-size: 30px;
       cursor: pointer;
       padding: 8px 12px;
       border-radius: 4px;

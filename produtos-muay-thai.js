@@ -1,6 +1,4 @@
-const pathKimono = 'public/images/kimono/'; // Should be changed to a muay-thai specific path
-const pathRashguard = 'public/images/rashguard/'; // Should be changed to a muay-thai specific path
-const pathFaixas = 'public/images/faixas/'; // Should be changed to a muay-thai specific path
+const pathMuayThai = '../public/images/muay-thai/';
 
 const produtos = [
     {
@@ -8,7 +6,7 @@ const produtos = [
       alt: "Luva de Boxe e Muay Thai",
       descricao: "Luvas de alta qualidade para treinos e competições de Muay Thai e Boxe. Conforto e segurança para seus punhos e mãos. Disponível em várias onças.",
       imagens: [
-        // placeholder image
+        pathMuayThai + "luva-st.jpg",
       ]
     },
     {
@@ -16,7 +14,12 @@ const produtos = [
       alt: "Shorts de Muay Thai",
       descricao: "Shorts com design tradicional tailandês, oferecendo máxima liberdade de movimento para chutes e joelhadas. Tecido leve e resistente.",
       imagens: [
-        // placeholder image
+        pathMuayThai + "short-amarelo.png",
+        pathMuayThai + "short-camuflado.png",
+        pathMuayThai + "short-rosa.png",
+        pathMuayThai + "short-thailandia.png",
+        pathMuayThai + "short-vermelho.png",
+        pathMuayThai + "shorts-dragao.png",
       ]
     },
     {
@@ -24,7 +27,7 @@ const produtos = [
       alt: "Caneleira de Muay Thai",
       descricao: "Proteja suas canelas com nossas caneleiras de alta absorção. Essenciais para treinos de sparring, garantem proteção e conforto.",
       imagens: [
-        // placeholder image
+        // No images available for shin guards
       ]
     },
   ];
