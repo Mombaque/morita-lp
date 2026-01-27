@@ -1,69 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morita Fitness - Equipamentos para Artes Marciais em Sorocaba</title>
-  <meta name="description" content="Sua loja de equipamentos para Jiu-Jitsu e Muay Thai em Sorocaba. Kimonos, luvas, shorts, e muito mais.">
-  <link rel="icon" href="public/images/favicon.png" type="image/png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #000000;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-    .container {
-      max-width: 600px;
-      padding: 20px;
-    }
-    .logo {
-      max-width: 300px;
-      margin-bottom: 2rem;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 3rem;
-    }
-    .options {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 20px 40px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      background-color: #333;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-      background-color: #3CF9AE;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morita Fitness - Equipamentos para Artes Marciais em Sorocaba</title>
+<meta name="description" content="Sua loja de equipamentos para Jiu-Jitsu e Muay Thai em Sorocaba. Kimonos, luvas, shorts, e muito mais.">
+<link rel="icon" href="public/images/favicon.png" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    text-align: center;
+  }
+  .container {
+    max-width: 600px;
+    padding: 20px;
+  }
+  .logo {
+    max-width: 300px;
+    margin-bottom: 2rem;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+  }
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background-color: #333;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover {
+    background-color: #3CF9AE;
+  }
+</style>
 </head>
 <body>
   <div class="container">
     <img src="public/images/logo.png" alt="Morita Fitness Logo" class="logo">
-    <h1>Sua loja de artes marciais</h1>
-    <p>Escolha a modalidade que você pratica:</p>
+    <div class="social-buttons">
+      <a class="button whatsapp" href="https://wa.me/c/5515981079332" target="_blank" aria-label="WhatsApp Morita Fitness">
+        <i class="fas fa-phone"></i>
+          WhatsApp / Catálogo
+      </a>
+      <a class="button instagram" href="https://www.instagram.com/morita.fitness/" target="_blank" aria-label="Instagram Morita Fitness">
+        <i class="fab fa-instagram"></i>
+        Instagram
+      </a>
+    </div>
+    <a class="address" href="https://maps.app.goo.gl/pNYYiMimWGa4actz7">Rua Coronel Nogueira Padilha, 429 - Sorocaba, SP</a>
+
+    <h1>Equipamentos, roupas e acessórios para artes marciais</h1>
+    <p>Selecione a modalidade e encontre os melhores produtos para seu treino</p>
     <div class="options">
       <a href="jiu-jitsu/" class="btn">Jiu-Jitsu</a>
       <a href="muay-thai/" class="btn">Muay Thai</a>
     </div>
   </div>
-</body>
-</html>
+  <div id="random-carousel-container"></div>
+  <div id="footer-container"></div>
+  <script src="random-products-carousel.js"></script>
+  <script src="src/footer.js"></script>
+</body></html>

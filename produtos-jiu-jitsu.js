@@ -56,10 +56,9 @@ const produtos = [
       alt: "Rashguard feminina In The Guard",
       descricao: "Performance e estilo se encontram em nossas rashguards femininas. Desenhadas para se ajustar perfeitamente ao corpo, oferecem o máximo de conforto e compressão. O tecido tecnológico com proteção UV é ideal para treinos de jiu-jitsu sem kimono (no-gi) ou qualquer outra atividade de alta intensidade. Garanta a sua e sinta a diferença no seu desempenho.",
       imagens: [
-        pathRashguard + "feminina1.png",
-        pathRashguard + "feminina2.png",
-        pathRashguard + "feminina3.jpeg",
-        pathRashguard + "feminina4.jpeg",
+        pathRashguard + "feminina1.jpeg",
+        pathRashguard + "feminina2.jpeg",
+        // pathRashguard + "feminina3.jpeg",
       ]
     },
   ];

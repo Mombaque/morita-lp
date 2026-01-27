@@ -2,9 +2,9 @@ const pathMuayThai = '../public/images/muay-thai/';
 
 const produtos = [
     {
-      nome: "Luva de Muay Thai",
+      nome: "Luva de Muay Thai / Boxe",
       alt: "Luva de Boxe e Muay Thai",
-      descricao: "Luvas de alta qualidade para treinos e competições de Muay Thai e Boxe. Conforto e segurança para seus punhos e mãos. Disponível em várias onças.",
+      descricao: "Luvas de alta qualidade para treinos e competições de Muay Thai e Boxe. Disponível em 12oz, 14oz e 16oz.",
       imagens: [
         pathMuayThai + "luva-st.jpg",
       ]
@@ -22,14 +22,14 @@ const produtos = [
         pathMuayThai + "shorts-dragao.png",
       ]
     },
-    {
-      nome: "Caneleira de Muay Thai",
-      alt: "Caneleira de Muay Thai",
-      descricao: "Proteja suas canelas com nossas caneleiras de alta absorção. Essenciais para treinos de sparring, garantem proteção e conforto.",
-      imagens: [
-        // No images available for shin guards
-      ]
-    },
+    // {
+    //   nome: "Caneleira de Muay Thai",
+    //   alt: "Caneleira de Muay Thai",
+    //   descricao: "Proteja suas canelas com nossas caneleiras de alta absorção. Essenciais para treinos de sparring, garantem proteção e conforto.",
+    //   imagens: [
+    //     // No images available for shin guards
+    //   ]
+    // },
   ];
 
 const container = document.getElementById("products");
