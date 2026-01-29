@@ -204,3 +204,36 @@ body {
     #footer-container {
       width: 100%;
     }
+
+/* Navigation Styles */
+.main-nav {
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #3CF9AE;
+  color: #1a1a1a;
+}
+
+/* Style for active link */
+.nav-link.active {
+    background-color: #3CF9AE;
+    color: #1a1a1a;
+    pointer-events: none; /* Disables clicking on the active link */
+}
