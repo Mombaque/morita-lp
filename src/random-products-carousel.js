@@ -4,6 +4,8 @@ import { produtosMuayThai } from "./produtos-muay-thai.js";
 const jiuJitsuCopy = produtosJiuJitsu.map(p => ({ ...p, imagens: [...p.imagens] }));
 const muayThaiCopy = produtosMuayThai.map(p => ({ ...p, imagens: [...p.imagens] }));
 
+const fixedFirstImage = 'public/images/kimono/adulto/azul-masculino.jpg';
+
 function shuffleArray(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -13,14 +15,16 @@ function shuffleArray(array) {
   return arr;
 }
 
-function getRandomImages(products, count) {
-  const allImages = products.flatMap(product => product.imagens);
+function getRandomImagesExcluding(products, count, excludeImage) {
+  const allImages = products.flatMap(product => product.imagens).filter(img => img !== excludeImage);
   return shuffleArray(allImages).slice(0, count);
 }
 
-const selectedJiuJitsuImages = getRandomImages(jiuJitsuCopy, 5);
-const selectedMuayThaiImages = getRandomImages(muayThaiCopy, 5);
-const allSelectedImages = shuffleArray([...selectedJiuJitsuImages, ...selectedMuayThaiImages]);
+const selectedJiuJitsuImages = getRandomImagesExcluding(jiuJitsuCopy, 4, fixedFirstImage);
+const selectedMuayThaiImages = getRandomImagesExcluding(muayThaiCopy, 4, fixedFirstImage);
+const randomSelectedImages = shuffleArray([...selectedJiuJitsuImages, ...selectedMuayThaiImages]);
+
+const allSelectedImages = [fixedFirstImage, ...randomSelectedImages];
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById("random-carousel-container");
