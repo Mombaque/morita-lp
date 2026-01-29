@@ -27,11 +27,12 @@ export const produtosJiuJitsu = [
       alt: "Kimono Adulto In The Guard",
       descricao: "Domine o tatame com nossos kimonos. Oferecemos modelos de alta performance das marcas mais renomadas como In The Guard, South Team e Naja. São kimonos leves e ultra resistentes, com tecido trançado que aguenta os treinos mais intensos. Aprovados para competições. Encontre o seu na Morita Kimonos em Sorocaba.",
       imagens: [
-        pathKimono + "adulto/chumbo-masculino.png",
-        pathKimono + "adulto/azul-masculino.jpg",
-        pathKimono + "adulto/branco-masculino.png",
-        pathKimono + "adulto/marinho-masculino.png",
+        pathKimono + "adulto/itg-chumbo.png",
+        pathKimono + "adulto/itg-azul.jpg",
+        pathKimono + "adulto/itg-branco.jpeg",
+        pathKimono + "adulto/itg-marinho.png",
         pathKimono + "adulto/st-preto.jpeg",
+        pathKimono + "adulto/naja-azul.jpeg",
       ]
     },
     {

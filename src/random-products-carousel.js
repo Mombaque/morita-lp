@@ -4,7 +4,7 @@ import { produtosMuayThai } from "./produtos-muay-thai.js";
 const jiuJitsuCopy = produtosJiuJitsu.map(p => ({ ...p, imagens: [...p.imagens] }));
 const muayThaiCopy = produtosMuayThai.map(p => ({ ...p, imagens: [...p.imagens] }));
 
-const fixedFirstImage = 'public/images/kimono/adulto/azul-masculino.jpg';
+const fixedFirstImage = 'public/images/kimono/adulto/itg-azul.jpg';
 
 function shuffleArray(array) {
   const arr = [...array];
