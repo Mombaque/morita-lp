@@ -4,7 +4,7 @@ import { produtosMuayThai } from "./produtos-muay-thai.js";
 const jiuJitsuCopy = produtosJiuJitsu.map(p => ({ ...p, imagens: [...p.imagens] }));
 const muayThaiCopy = produtosMuayThai.map(p => ({ ...p, imagens: [...p.imagens] }));
 
-const fixedFirstImage = '/images/kimono/adulto/itg-azul.jpg';
+const fixedFirstImage = 'public/images/kimono/adulto/itg-azul.jpg';
 
 function shuffleArray(array) {
   const arr = [...array];
@@ -16,7 +16,7 @@ function shuffleArray(array) {
 }
 
 function normalizeImagePath(image) {
-  return image.replace(/^\.\.\/public\/images\//, '/images/').replace(/^public\/images\//, '/images/');
+  return image.replace(/^\.\.\/public\/images\//, 'public/images/');
 }
 
 function getRandomProductsExcluding(products, count, excludeImage, categoryName, categoryUrl) {
