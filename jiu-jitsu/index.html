@@ -67,7 +67,7 @@
     }
   </script>
 </head>
-<body>
+<body class="category-page jiu-jitsu-page">
   <nav class="main-nav">
     <a href="../" class="nav-link">Home</a>
     <a href="../jiu-jitsu/" class="nav-link">Jiu-Jitsu</a>
@@ -77,31 +77,55 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK3DKRF9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <header>
+  <header class="category-header">
     <img class="logo" src="../public/images/logo.png" alt="Morita Fitness">
   </header>
 
-  <div class="container">
-    <section class="hero">
-      <h2>Alta performance para quem vive o jiu-jitsu</h2>
-      <p>
-        Trabalhamos com kimonos adulto e infantil, rashguards e roupas para
-        artes marciais. Qualidade, conforto e durabilidade garantidos para
-        treino ou competição.
-      </p>
-      <div class="social-buttons">
-        <a class="button whatsapp" href="https://wa.me/c/5515981079332" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Morita Fitness" data-track-event="whatsapp_catalog_click" data-track-category="jiu-jitsu">
-          <i class="fas fa-phone"></i>
-           WhatsApp / Catálogo
-        </a>
-        <a class="button instagram" href="https://www.instagram.com/morita.fitness/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Morita Fitness" data-track-event="instagram_click" data-track-category="jiu-jitsu">
-          <i class="fab fa-instagram"></i>
-          Instagram
-        </a>
+  <main class="category-main">
+    <section class="category-hero" aria-labelledby="category-title">
+      <div class="category-hero-copy">
+        <p class="eyebrow">Jiu-Jitsu em Sorocaba</p>
+        <h1 id="category-title">Kimonos, rashguards</h1>
+        <p class="category-lead">
+          Produtos para adulto e infantil, com modelos para treino e competição.
+        </p>
+        <div class="hero-actions">
+          <a class="button whatsapp primary-cta" href="https://wa.me/c/5515981079332" target="_blank" rel="noopener noreferrer" aria-label="Abrir catálogo de Jiu-Jitsu da Morita Fitness no WhatsApp" data-track-event="whatsapp_catalog_click" data-track-category="jiu-jitsu">
+            <i class="fas fa-phone"></i>
+            Consultar no WhatsApp
+          </a>
+          <a class="button instagram secondary-cta" href="https://www.instagram.com/morita.fitness/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Morita Fitness" data-track-event="instagram_click" data-track-category="jiu-jitsu">
+            <i class="fab fa-instagram"></i>
+            Instagram
+          </a>
+        </div>
+        <ul class="trust-list" aria-label="Diferenciais para Jiu-Jitsu">
+          <li>Kimonos adulto e infantil</li>
+          <li>Rashguards e faixas</li>
+          <li>Retirada na loja</li>
+        </ul>
       </div>
-    <section id="products" class="products">
+      <div class="category-hero-media" aria-hidden="true">
+        <img src="../public/images/kimono/adulto/itg-branco.jpeg" alt="" class="category-hero-img category-hero-img-main">
+        <img src="../public/images/faixas/1.jpg" alt="" class="category-hero-img category-hero-img-accent">
+      </div>
     </section>
-  </div>
+
+    <section class="quick-nav" aria-label="Categorias de Jiu-Jitsu">
+      <span>Kimonos</span>
+      <span>Rashguards</span>
+      <span>Faixas</span>
+      <span>Infantil</span>
+    </section>
+
+    <section class="products-intro" aria-labelledby="products-title">
+      <p class="eyebrow">Catálogo</p>
+      <h2 id="products-title">Produtos de Jiu-Jitsu</h2>
+    </section>
+
+    <section id="products" class="products" data-track-category="jiu-jitsu">
+    </section>
+  </main>
 
   <div id="footer-container"></div>
   <script type="module" src="../src/footer.js"></script>

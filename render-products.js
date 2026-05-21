@@ -30,6 +30,7 @@ export function renderProducts(products, containerId) {
   }
 
   container.innerHTML = '';
+  const trackingCategory = container.dataset.trackCategory || 'products';
 
   const shuffledProducts = shuffle(products);
 
@@ -62,6 +63,10 @@ export function renderProducts(products, containerId) {
         </div>
         <h3>${p.nome}</h3>
         <p>${p.descricao}</p>
+        <a class="product-cta" href="https://wa.me/c/5515981079332" target="_blank" rel="noopener noreferrer" aria-label="Consultar ${p.nome} no WhatsApp" data-track-event="whatsapp_catalog_click" data-track-category="${trackingCategory}" data-track-selected-category="${p.nome}">
+          <i class="fas fa-phone"></i>
+          Consultar no WhatsApp
+        </a>
       `;
   
       container.appendChild(productDiv);
