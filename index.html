@@ -8,6 +8,24 @@
 <link rel="icon" href="public/images/favicon.png" type="image/png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="styles.css">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK3DKRF9');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17391563568">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17391563568');
+</script>
 
 <style>
   body {
@@ -61,6 +79,10 @@
 </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK3DKRF9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <nav class="main-nav">
     <a href="./" class="nav-link">Home</a>
     <a href="./jiu-jitsu/" class="nav-link">Jiu-Jitsu</a>
@@ -69,29 +91,30 @@
   <div class="container">
     <img src="public/images/logo.png" alt="Morita Fitness Logo" class="logo">
     <div class="social-buttons">
-      <a class="button whatsapp" href="https://wa.me/c/5515981079332" target="_blank" aria-label="WhatsApp Morita Fitness">
+      <a class="button whatsapp" href="https://wa.me/c/5515981079332" target="_blank" aria-label="WhatsApp Morita Fitness" data-track-event="whatsapp_catalog_click" data-track-category="home">
         <i class="fas fa-phone"></i>
           WhatsApp / Catálogo
       </a>
-      <a class="button instagram" href="https://www.instagram.com/morita.fitness/" target="_blank" aria-label="Instagram Morita Fitness">
+      <a class="button instagram" href="https://www.instagram.com/morita.fitness/" target="_blank" aria-label="Instagram Morita Fitness" data-track-event="instagram_click" data-track-category="home">
         <i class="fab fa-instagram"></i>
         Instagram
       </a>
     </div>
-    <a class="address" href="https://maps.app.goo.gl/pNYYiMimWGa4actz7">Rua Coronel Nogueira Padilha, 429 - Sorocaba, SP</a>
+    <a class="address" href="https://maps.app.goo.gl/pNYYiMimWGa4actz7" data-track-event="store_location_click" data-track-category="home">Rua Coronel Nogueira Padilha, 429 - Sorocaba, SP</a>
 
     <h1>Equipamentos, roupas e acessórios para artes marciais</h1>
     <br>
     <br>
     <h2>Selecione a modalidade e encontre os melhores produtos para seu treino</h2>
     <div class="options">
-      <a href="jiu-jitsu/" class="btn">Jiu-Jitsu</a>
-      <a href="muay-thai/" class="btn">Muay Thai</a>
+      <a href="jiu-jitsu/" class="btn" data-track-event="category_navigation_click" data-track-category="home" data-track-selected-category="jiu-jitsu">Jiu-Jitsu</a>
+      <a href="muay-thai/" class="btn" data-track-event="category_navigation_click" data-track-category="home" data-track-selected-category="muay-thai">Muay Thai</a>
     </div>
   </div>
   <div id="random-carousel-container"></div>
   <div id="footer-container"></div>
   <script type="module" src="src/random-products-carousel.js"></script>
+  <script type="module" src="src/tracking.js"></script>
   <script src="src/footer.js"></script>
   <script src="src/navigation.js"></script>
 </body></html>
