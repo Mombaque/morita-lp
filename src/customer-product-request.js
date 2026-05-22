@@ -79,7 +79,7 @@ const ADULT_KIMONO_SIZES = ['F2', 'F3', 'A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6'
 const INFANTIL_JUDO_SIZES = ['M000', 'M00', 'M0', 'M1', 'M2', 'M3', 'M4'];
 const CLOTHING_SIZES = ['PP', 'P', 'M', 'G', 'GG', 'XGG'];
 const UNKNOWN_SIZE_OPTION = [SIZE.naoSei];
-const BELT_ICON_BASE_PATH = '/icons/faixas/';
+const BELT_ICON_BASE_PATH = '../public/icons/faixas/';
 const ADULT_BELT_COLORS = ['Branca', 'Azul', 'Roxa', 'Marrom', 'Preta', 'Outra'];
 const JIU_JITSU_KIDS_BELT_COLORS = [
   'Branca',
