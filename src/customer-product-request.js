@@ -24,7 +24,6 @@ const FIELD = {
   modality: 'modality',
   productTypes: 'productTypes',
   productDetails: 'productDetails',
-  brand: 'brand',
   size: 'size',
   color: 'color',
   heightCm: 'heightCm',
@@ -59,22 +58,10 @@ const PRODUCT_TYPE = {
   outro: 'Outro',
 };
 
-const BRAND = {
-  inTheGuard: 'In The Guard',
-  keikoSports: 'Keiko Sports',
-  southTeam: 'South Team',
-  naja: 'Naja',
-  haganah: 'Haganah',
-  venum: 'Venum',
-  ockto: 'Ockto',
-  qualquerMarca: 'Qualquer marca',
-};
-
 const SIZE = {
   naoSei: 'Não sei',
 };
 
-const KIMONO_BRANDS = [BRAND.inTheGuard, BRAND.keikoSports, BRAND.southTeam, BRAND.naja, BRAND.haganah, BRAND.qualquerMarca];
 const ADULT_KIMONO_SIZES = ['F2', 'F3', 'A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
 const INFANTIL_JUDO_SIZES = ['M000', 'M00', 'M0', 'M1', 'M2', 'M3', 'M4'];
 const CLOTHING_SIZES = ['PP', 'P', 'M', 'G', 'GG', 'XGG'];
@@ -105,14 +92,6 @@ const options = {
     [MODALITY.muayThaiBoxe]: [PRODUCT_TYPE.luvas, PRODUCT_TYPE.protetorBucal, PRODUCT_TYPE.caneleira, PRODUCT_TYPE.bermudaShorts, PRODUCT_TYPE.outro],
     [MODALITY.mma]: [PRODUCT_TYPE.bermudaShorts, PRODUCT_TYPE.rashguard, PRODUCT_TYPE.luvas, PRODUCT_TYPE.outro],
     [MODALITY.judo]: [PRODUCT_TYPE.kimonoInfantilJudo, PRODUCT_TYPE.faixaAdulto, PRODUCT_TYPE.faixaInfantil, PRODUCT_TYPE.outro],
-  },
-  brands: {
-    [PRODUCT_TYPE.kimonoAdulto]: KIMONO_BRANDS,
-    [PRODUCT_TYPE.kimonoInfantilJudo]: KIMONO_BRANDS,
-    [PRODUCT_TYPE.faixaAdulto]: [BRAND.inTheGuard, BRAND.southTeam, BRAND.venum, BRAND.qualquerMarca],
-    [PRODUCT_TYPE.faixaInfantil]: [BRAND.inTheGuard, BRAND.qualquerMarca],
-    [PRODUCT_TYPE.rashguard]: [BRAND.inTheGuard, BRAND.venum, BRAND.qualquerMarca],
-    [PRODUCT_TYPE.bermudaShorts]: [BRAND.venum, BRAND.ockto, BRAND.inTheGuard, BRAND.qualquerMarca],
   },
   sizes: {
     [PRODUCT_TYPE.kimonoAdulto]: [...ADULT_KIMONO_SIZES, ...UNKNOWN_SIZE_OPTION],
@@ -326,17 +305,15 @@ function renderProductQuestions() {
 }
 
 function renderProductQuestionGroup(productType) {
-  const brandOptions = options.brands[productType];
   const sizeOptions = options.sizes[productType];
   const beltColorOptions = getBeltColorOptions(productType);
   const needsBodyInfo = productType === PRODUCT_TYPE.kimonoAdulto || productType === PRODUCT_TYPE.kimonoInfantilJudo;
-  const hasStructuredOptions = Boolean(brandOptions || sizeOptions || beltColorOptions || needsBodyInfo || productType === PRODUCT_TYPE.kimonoInfantilJudo);
+  const hasStructuredOptions = Boolean(sizeOptions || beltColorOptions || needsBodyInfo || productType === PRODUCT_TYPE.kimonoInfantilJudo);
   const details = state.data[FIELD.productDetails]?.[productType] || {};
 
   return `
     <section class="request-product-section">
       <h3>${productType}</h3>
-      ${brandOptions ? renderDetailChoiceGroup(FIELD.brand, productType, 'Marca preferida', brandOptions, details[FIELD.brand]) : ''}
       ${sizeOptions ? renderDetailChoiceGroup(FIELD.size, productType, 'Tamanho', sizeOptions, details[FIELD.size]) : ''}
       ${beltColorOptions ? renderDetailChoiceGroup(FIELD.color, productType, 'Cor da faixa', beltColorOptions, details[FIELD.color], getBeltColorIconSrc) : ''}
       ${needsBodyInfo ? '<p class="request-help">Para kimono, altura e peso ajudam no atendimento. O tamanho ainda é selecionado por você.</p>' : ''}
@@ -472,7 +449,6 @@ function buildPayloads() {
       customerPhone: state.data[FIELD.customerPhone],
       modality: state.data[FIELD.modality],
       productType,
-      brand: details[FIELD.brand] || null,
       size: details[FIELD.size] || null,
       color: details[FIELD.color] || null,
       heightCm: details[FIELD.heightCm] ? Number(details[FIELD.heightCm]) : null,
