@@ -17,6 +17,7 @@ const BUTTON_LABELS = {
 
 const ERROR_MESSAGES = {
   required: 'Preencha as informações obrigatórias para continuar.',
+  privacy: 'Confirme o uso dos seus dados para enviar a consulta.',
   submit: 'Não foi possível enviar agora. Tente pelo WhatsApp.',
 };
 
@@ -33,6 +34,7 @@ const FIELD = {
   customerPhone: 'customerPhone',
   notes: 'notes',
   website: 'website',
+  acceptedPrivacyPolicy: 'acceptedPrivacyPolicy',
 };
 
 const DETAIL_FIELD_SEPARATOR = '::';
@@ -156,6 +158,7 @@ function bindRequestEvents() {
   });
   document.querySelector('[data-request-back]').addEventListener('click', goBack);
   document.querySelector('[data-request-next]').addEventListener('click', goNext);
+  document.getElementById('customer-request-form').addEventListener('change', handleFormChange);
 }
 
 function openRequestModal() {
@@ -235,6 +238,8 @@ function saveCurrentStep() {
   formData.forEach((value, key) => {
     state.data[key] = value.toString();
   });
+
+  state.data[FIELD.acceptedPrivacyPolicy] = formData.get(FIELD.acceptedPrivacyPolicy) === 'true';
 }
 
 function isCurrentStepValid() {
@@ -242,7 +247,7 @@ function isCurrentStepValid() {
     1: [FIELD.modality],
     2: [FIELD.productTypes],
     3: [],
-    [TOTAL_STEPS]: [FIELD.customerName, FIELD.customerPhone],
+    [TOTAL_STEPS]: [FIELD.customerName, FIELD.customerPhone, FIELD.acceptedPrivacyPolicy],
   }[state.step];
 
   const missing = requiredFields.some(field => {
@@ -266,6 +271,27 @@ function renderStep() {
 
   const content = document.getElementById('request-step-content');
   content.innerHTML = getStepHtml();
+  updateSubmitButtonState();
+}
+
+function handleFormChange(event) {
+  if (!(event.target instanceof HTMLInputElement)) return;
+  if (event.target.name !== FIELD.acceptedPrivacyPolicy) return;
+
+  state.data[FIELD.acceptedPrivacyPolicy] = event.target.checked;
+  updateSubmitButtonState();
+  document.querySelector('.request-error')?.remove();
+}
+
+function updateSubmitButtonState() {
+  const button = document.querySelector('[data-request-next]');
+
+  if (state.step !== TOTAL_STEPS || state.status === REQUEST_STATUS.success) {
+    button.disabled = false;
+    return;
+  }
+
+  button.disabled = state.data[FIELD.acceptedPrivacyPolicy] !== true;
 }
 
 function getStepHtml() {
@@ -290,7 +316,24 @@ function getStepHtml() {
     <label class="request-label">Seu nome<input name="${FIELD.customerName}" value="${state.data[FIELD.customerName] || ''}" required></label>
     <label class="request-label">WhatsApp<input name="${FIELD.customerPhone}" value="${state.data[FIELD.customerPhone] || ''}" inputmode="tel" required></label>
     <label class="request-label">Observações<textarea name="${FIELD.notes}" rows="3">${state.data[FIELD.notes] || ''}</textarea></label>
+    ${renderPrivacyConsent()}
     <input class="request-honeypot" name="${FIELD.website}" tabindex="-1" autocomplete="off">
+  `;
+}
+
+function renderPrivacyConsent() {
+  return `
+    <section class="request-privacy" aria-label="Política de Privacidade">
+      <label class="request-privacy-check">
+        <input type="checkbox" name="${FIELD.acceptedPrivacyPolicy}" value="true" ${state.data[FIELD.acceptedPrivacyPolicy] === true ? 'checked' : ''} required>
+        <span>Li e concordo com o uso dos meus dados para contato e atendimento.</span>
+      </label>
+      <p>Seus dados serão utilizados apenas para contato e atendimento relacionados aos nossos produtos e serviços.</p>
+      <details class="request-privacy-details">
+        <summary>Política de Privacidade</summary>
+        <p>Coletamos apenas os dados enviados neste formulário para responder sua consulta, confirmar disponibilidade de produtos e prestar atendimento. Não usamos esses dados para outras finalidades.</p>
+      </details>
+    </section>
   `;
 }
 
@@ -411,6 +454,14 @@ function renderMultiChoiceGroup(name, label, values) {
 
 async function submitRequest() {
   const button = document.querySelector('[data-request-next]');
+
+  if (state.data[FIELD.acceptedPrivacyPolicy] !== true) {
+    document.querySelector('.request-error')?.remove();
+    document.getElementById('request-step-content').insertAdjacentHTML('beforeend', renderError(ERROR_MESSAGES.privacy));
+    updateSubmitButtonState();
+    return;
+  }
+
   button.disabled = true;
   button.textContent = BUTTON_LABELS.submitting;
 
@@ -456,8 +507,22 @@ function buildPayloads() {
       age: details[FIELD.age] ? Number(details[FIELD.age]) : null,
       notes: buildNotes(details),
       website: state.data[FIELD.website] || null,
+      acceptedPrivacyPolicy: true,
+      source: 'landing-page',
+      landingPage: getLandingPagePath(),
+      campaign: getCampaign(),
     };
   });
+}
+
+function getLandingPagePath() {
+  const path = window.location.pathname.replace(/\/$/, '');
+  return path || '/';
+}
+
+function getCampaign() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('campaign') || params.get('utm_campaign') || null;
 }
 
 function buildNotes(details) {

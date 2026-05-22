@@ -1,0 +1,16 @@
+name: morita-lp-dev
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ..:/app
+      - morita_lp_node_modules:/app/node_modules
+
+volumes:
+  morita_lp_node_modules:

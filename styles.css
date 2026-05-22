@@ -884,6 +884,50 @@ body {
   display: none;
 }
 
+.request-privacy {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  color: rgba(255, 255, 255, 0.72);
+  display: grid;
+  gap: 10px;
+  line-height: 1.45;
+  margin-top: 8px;
+  padding: 14px;
+}
+
+.request-privacy p {
+  margin: 0;
+}
+
+.request-privacy-check {
+  align-items: flex-start;
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+  display: flex;
+  font-weight: 800;
+  gap: 10px;
+}
+
+.request-privacy-check input {
+  accent-color: #3CF9AE;
+  flex: 0 0 auto;
+  height: 18px;
+  margin-top: 2px;
+  width: 18px;
+}
+
+.request-privacy-details summary {
+  color: #3CF9AE;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 900;
+}
+
+.request-privacy-details p {
+  margin-top: 8px;
+}
+
 .request-actions {
   display: flex;
   gap: 10px;
