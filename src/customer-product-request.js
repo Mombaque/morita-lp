@@ -466,13 +466,13 @@ async function submitRequest() {
   button.textContent = BUTTON_LABELS.submitting;
 
   try {
-    const responses = await Promise.all(buildPayloads().map(payload => fetch(`${API_BASE_URL}/v1/CustomerProductRequest`, {
+    const response = await fetch(`${API_BASE_URL}/v1/CustomerProductRequest`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })));
+      body: JSON.stringify(buildPayload()),
+    });
 
-    if (responses.some(response => !response.ok)) throw new Error('Request failed');
+    if (!response.ok) throw new Error('Request failed');
 
     state.status = REQUEST_STATUS.success;
     state.data = {};
@@ -490,29 +490,32 @@ function renderError(message) {
   return `<p class="request-error">${message}</p>`;
 }
 
-function buildPayloads() {
+function buildPayload() {
   // TODO: suggest kimono size from height and weight after validating the sizing table with the store.
-  return getSelectedProductTypes().map(productType => {
-    const details = state.data[FIELD.productDetails]?.[productType] || {};
+  return {
+    customerName: state.data[FIELD.customerName],
+    customerPhone: state.data[FIELD.customerPhone],
+    modality: state.data[FIELD.modality],
+    notes: state.data[FIELD.notes] || null,
+    website: state.data[FIELD.website] || null,
+    acceptedPrivacyPolicy: true,
+    source: 'landing-page',
+    landingPage: getLandingPagePath(),
+    campaign: getCampaign(),
+    items: getSelectedProductTypes().map(productType => {
+      const details = state.data[FIELD.productDetails]?.[productType] || {};
 
-    return {
-      customerName: state.data[FIELD.customerName],
-      customerPhone: state.data[FIELD.customerPhone],
-      modality: state.data[FIELD.modality],
-      productType,
-      size: details[FIELD.size] || null,
-      color: details[FIELD.color] || null,
-      heightCm: details[FIELD.heightCm] ? Number(details[FIELD.heightCm]) : null,
-      weightKg: details[FIELD.weightKg] ? Number(details[FIELD.weightKg]) : null,
-      age: details[FIELD.age] ? Number(details[FIELD.age]) : null,
-      notes: buildNotes(details),
-      website: state.data[FIELD.website] || null,
-      acceptedPrivacyPolicy: true,
-      source: 'landing-page',
-      landingPage: getLandingPagePath(),
-      campaign: getCampaign(),
-    };
-  });
+      return {
+        productType,
+        size: details[FIELD.size] || null,
+        color: details[FIELD.color] || null,
+        heightCm: details[FIELD.heightCm] ? Number(details[FIELD.heightCm]) : null,
+        weightKg: details[FIELD.weightKg] ? Number(details[FIELD.weightKg]) : null,
+        age: details[FIELD.age] ? Number(details[FIELD.age]) : null,
+        notes: buildItemNotes(details),
+      };
+    }),
+  };
 }
 
 function getLandingPagePath() {
@@ -525,15 +528,10 @@ function getCampaign() {
   return params.get('campaign') || params.get('utm_campaign') || null;
 }
 
-function buildNotes(details) {
-  const notes = [];
+function buildItemNotes(details) {
   const productDetails = details[FIELD.productDetails]?.trim();
-  const customerNotes = state.data[FIELD.notes]?.trim();
 
-  if (productDetails) notes.push(`Detalhes do produto: ${productDetails}`);
-  if (customerNotes) notes.push(customerNotes);
-
-  return notes.length > 0 ? notes.join('\n') : null;
+  return productDetails ? `Detalhes do produto: ${productDetails}` : null;
 }
 
 function getSelectedProductTypes() {
