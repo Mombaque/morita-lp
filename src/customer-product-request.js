@@ -127,9 +127,9 @@ function injectRequestWidget() {
       <div class="request-backdrop" data-request-close></div>
       <section class="request-panel" role="dialog" aria-modal="true" aria-labelledby="request-title">
         <button class="request-close" type="button" aria-label="Fechar consulta" data-request-close>&times;</button>
-        <p class="eyebrow">Consulta rápida</p>
-        <h2 id="request-title">Não encontrou o produto certo?</h2>
-        <p class="request-subtitle">Responda em poucos passos e confirmamos disponibilidade pelo WhatsApp.</p>
+        <p class="eyebrow">Guia rápido</p>
+        <h2 id="request-title">Encontre seu tamanho e produto certo</h2>
+        <p class="request-subtitle">Responda em poucos passos e a Morita confirma a melhor opção, disponibilidade e atendimento pelo WhatsApp.</p>
         <div class="request-progress">Passo <span id="request-step">1</span> de ${TOTAL_STEPS}</div>
         <form id="customer-request-form" class="request-form">
           <div id="request-step-content"></div>
@@ -300,12 +300,12 @@ function getStepHtml() {
   }
 
   if (state.step === 1) {
-    return renderChoiceGroup(FIELD.modality, 'Escolha a modalidade', options.modalities);
+    return renderChoiceGroup(FIELD.modality, 'Para qual modalidade você precisa de ajuda?', options.modalities);
   }
 
   if (state.step === 2) {
     const productTypes = options.productTypes[state.data[FIELD.modality]] || [PRODUCT_TYPE.outro];
-    return renderMultiChoiceGroup(FIELD.productTypes, 'Quais produtos você procura?', productTypes);
+    return renderMultiChoiceGroup(FIELD.productTypes, 'O que você quer encontrar?', productTypes);
   }
 
   if (state.step === 3) {
@@ -359,7 +359,7 @@ function renderProductQuestionGroup(productType) {
       <h3>${productType}</h3>
       ${sizeOptions ? renderDetailChoiceGroup(FIELD.size, productType, 'Tamanho', sizeOptions, details[FIELD.size]) : ''}
       ${beltColorOptions ? renderDetailChoiceGroup(FIELD.color, productType, 'Cor da faixa', beltColorOptions, details[FIELD.color], getBeltColorIconSrc) : ''}
-      ${needsBodyInfo ? '<p class="request-help">Para kimono, altura e peso ajudam no atendimento. O tamanho ainda é selecionado por você.</p>' : ''}
+      ${needsBodyInfo ? '<p class="request-help">Para kimono, altura e peso ajudam a orientar o tamanho com mais segurança.</p>' : ''}
       ${needsBodyInfo ? '<label class="request-label">Altura em cm<input name="' + getDetailFieldName(FIELD.heightCm, productType) + '" type="number" min="50" max="230" value="' + (details[FIELD.heightCm] || '') + '"></label>' : ''}
       ${needsBodyInfo ? '<label class="request-label">Peso em kg<input name="' + getDetailFieldName(FIELD.weightKg, productType) + '" type="number" min="10" max="250" step="0.1" value="' + (details[FIELD.weightKg] || '') + '"></label>' : ''}
       ${productType === PRODUCT_TYPE.kimonoInfantilJudo ? '<label class="request-label">Idade<input name="' + getDetailFieldName(FIELD.age, productType) + '" type="number" min="1" max="120" value="' + (details[FIELD.age] || '') + '"></label>' : ''}
@@ -386,7 +386,7 @@ function getBeltColorOptions(productType) {
 function renderProductDetailsField(productType, value = '') {
   return `
     <label class="request-label">
-      Detalhes do produto
+      Detalhes ou dúvida sobre tamanho
       <textarea name="${getDetailFieldName(FIELD.productDetails, productType)}" rows="3" maxlength="${PRODUCT_DETAILS_MAX_LENGTH}" placeholder="Descreva o produto, tamanho, cor ou preferência">${value}</textarea>
     </label>
     <p class="request-help">Até ${PRODUCT_DETAILS_MAX_LENGTH} caracteres.</p>
@@ -439,7 +439,7 @@ function renderMultiChoiceGroup(name, label, values) {
   return `
     <fieldset class="request-choice-group request-choice-group-multiple">
       <legend>${label}</legend>
-      <p class="request-help">Selecione um ou mais produtos. Cada produto terá perguntas próprias no próximo passo.</p>
+      <p class="request-help">Selecione um ou mais itens. Se não souber o tamanho, escolha "Não sei" no próximo passo.</p>
       <div class="request-choice-grid">
         ${values.map(value => `
           <label class="request-choice request-choice-multiple ${selectedValues.includes(value) ? 'selected' : ''}">
