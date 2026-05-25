@@ -55,6 +55,7 @@ const PRODUCT_TYPE = {
   rashguard: 'Rashguard',
   bermudaShorts: 'Bermuda / shorts',
   luvas: 'Luvas',
+  bandagem: 'Bandagem',
   protetorBucal: 'Protetor bucal',
   caneleira: 'Caneleira',
   outro: 'Outro',
