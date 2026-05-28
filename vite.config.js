@@ -10,7 +10,9 @@ export default defineConfig({
       input: {
         main: resolve(rootDir, 'index.html'),
         jiuJitsu: resolve(rootDir, 'jiu-jitsu/index.html'),
+        karate: resolve(rootDir, 'karate/index.html'),
         muayThai: resolve(rootDir, 'muay-thai/index.html'),
+        product: resolve(rootDir, 'produto/index.html'),
       },
     },
   },
