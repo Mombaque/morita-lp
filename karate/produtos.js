@@ -1,8 +1,13 @@
-import { renderProducts } from '../render-products.js';
-import { MODALITY, products } from '../src/product-catalog.js';
+import { renderCatalogUnavailable, renderProducts } from '../render-products.js';
+import { fetchPublicCatalogProducts } from '../src/public-catalog-api.js';
+import { MODALITY } from '../src/product-catalog-constants.js';
 
-const karateProducts = products.filter(product => product.modality === MODALITY.karate);
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts(karateProducts, 'products', { detailBasePath: '../produto/', preserveOrder: true });
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const karateProducts = await fetchPublicCatalogProducts({ modality: MODALITY.karate });
+    renderProducts(karateProducts, 'products', { detailBasePath: '../produto/', preserveOrder: true });
+  } catch (error) {
+    console.error(error);
+    renderCatalogUnavailable('products');
+  }
 });

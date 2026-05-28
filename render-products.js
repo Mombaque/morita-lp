@@ -65,6 +65,22 @@ function renderPlaceholder(productName) {
   return `<div class="carousel-img active product-image-placeholder" role="img" aria-label="Imagem em breve para ${escapeHtml(productName)}">Imagem em breve</div>`;
 }
 
+export function renderCatalogUnavailable(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = `
+    <section class="product-not-found catalog-unavailable">
+      <p class="eyebrow">Catálogo indisponível</p>
+      <h2>Não foi possível carregar os produtos agora.</h2>
+      <p>Fale com a Morita pelo WhatsApp para consultar modelos, tamanhos e valores.</p>
+      <div class="hero-actions">
+        <a class="button whatsapp primary-cta" href="https://wa.me/c/5515981079332" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+      </div>
+    </section>
+  `;
+}
+
 export function renderProducts(products, containerId, options = {}) {
   const container = document.getElementById(containerId);
   if (!container) {

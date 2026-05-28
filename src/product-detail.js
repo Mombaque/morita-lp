@@ -1,4 +1,4 @@
-import { getProductBySlug, getRelatedProducts } from './product-catalog.js';
+import { fetchPublicCatalogProduct, fetchRelatedPublicCatalogProducts } from './public-catalog-api.js';
 
 const WHATSAPP_PHONE = '5515981079332';
 
@@ -7,22 +7,42 @@ const state = {
   selectedVariant: null,
   selectedSize: null,
   imageIndex: 0,
+  relatedProducts: [],
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const slug = new URLSearchParams(window.location.search).get('slug');
-  const product = getProductBySlug(slug);
 
-  if (!product) {
+  if (!slug) {
     renderNotFound();
     return;
   }
 
-  state.product = product;
-  state.selectedVariant = product.colorVariants[0] || null;
-  state.selectedSize = product.availableSizes[0] || null;
-  renderProductDetail();
-  bindProductDetailEvents();
+  try {
+    const product = await fetchPublicCatalogProduct(slug);
+    let relatedProducts = [];
+
+    try {
+      relatedProducts = await fetchRelatedPublicCatalogProducts(slug);
+    } catch (error) {
+      console.error(error);
+    }
+
+    state.product = product;
+    state.relatedProducts = relatedProducts;
+    state.selectedVariant = product.colorVariants?.[0] || null;
+    state.selectedSize = product.availableSizes?.[0] || null;
+    renderProductDetail();
+    bindProductDetailEvents();
+  } catch (error) {
+    if (error.status === 404) {
+      renderNotFound();
+      return;
+    }
+
+    console.error(error);
+    renderUnavailable();
+  }
 });
 
 function escapeHtml(value) {
@@ -48,9 +68,23 @@ function renderNotFound() {
   `;
 }
 
+function renderUnavailable() {
+  document.getElementById('product-detail-root').innerHTML = `
+    <section class="product-not-found">
+      <p class="eyebrow">Catálogo indisponível</p>
+      <h1>Não foi possível carregar este produto agora.</h1>
+      <p>Fale com a Morita pelo WhatsApp para consultar modelos, tamanhos e valores.</p>
+      <div class="hero-actions">
+        <a class="button request-hero-cta" href="../jiu-jitsu/">Voltar para Jiu-Jitsu</a>
+        <a class="button whatsapp primary-cta" href="https://wa.me/c/${WHATSAPP_PHONE}" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+      </div>
+    </section>
+  `;
+}
+
 function renderProductDetail() {
   const product = state.product;
-  const relatedProducts = getRelatedProducts(product);
+  const relatedProducts = state.relatedProducts || [];
 
   document.title = `${product.name} | Morita Fitness`;
   document.getElementById('product-detail-root').innerHTML = `
@@ -136,7 +170,7 @@ function renderCarousel() {
 }
 
 function renderColorSelector() {
-  if (state.product.availableColors.length === 0) return '';
+  if (!state.product.availableColors?.length) return '';
 
   return `
     <section class="detail-selector" aria-label="Cores disponíveis">
@@ -151,7 +185,7 @@ function renderColorSelector() {
 }
 
 function renderSizeSelector() {
-  if (state.product.availableSizes.length === 0) return '';
+  if (!state.product.availableSizes?.length) return '';
 
   return `
     <section class="detail-selector" aria-label="Tamanhos disponíveis">
@@ -202,7 +236,7 @@ function bindProductDetailEvents() {
 }
 
 function selectColor(color) {
-  state.selectedVariant = state.product.colorVariants.find(variant => variant.color === color) || state.product.colorVariants[0];
+  state.selectedVariant = state.product.colorVariants?.find(variant => variant.color === color) || state.product.colorVariants?.[0] || null;
   state.imageIndex = 0;
   document.querySelector('.product-detail-gallery').innerHTML = renderCarousel();
   document.getElementById('product-detail-price').textContent = getSelectedPrice();
