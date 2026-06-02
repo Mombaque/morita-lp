@@ -44,6 +44,10 @@ function getProductImages(product) {
   return product.imagens || firstVariantImages;
 }
 
+function getProductPrice(product) {
+  return product.formattedPrice || product.price;
+}
+
 function renderProductMeta(product) {
   if (!product.slug) return '';
 
@@ -55,7 +59,7 @@ function renderProductMeta(product) {
       <span>${escapeHtml(product.category)}</span>
       <span>${escapeHtml([product.brand, product.model].filter(Boolean).join(' · '))}</span>
     </div>
-    <strong class="product-price">${escapeHtml(product.price)}</strong>
+    <strong class="product-price">${escapeHtml(getProductPrice(product))}</strong>
     ${colors ? `<p class="product-summary"><strong>Cores:</strong> ${escapeHtml(colors)}${product.availableColors.length > 4 ? '...' : ''}</p>` : ''}
     ${sizes ? `<p class="product-summary"><strong>Tamanhos:</strong> ${escapeHtml(sizes)}${product.availableSizes.length > 6 ? '...' : ''}</p>` : ''}
   `;
