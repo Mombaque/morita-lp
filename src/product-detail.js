@@ -1,4 +1,5 @@
 import { fetchPublicCatalogProduct, fetchRelatedPublicCatalogProducts } from './public-catalog-api.js';
+import { MODALITY } from './product-catalog-constants.js';
 
 const WHATSAPP_PHONE = '5515981079332';
 
@@ -285,7 +286,8 @@ function getWhatsAppUrl() {
 }
 
 function getModalityUrl(product) {
-  if (product.modality === 'Karatê') return '../karate/';
-  if (product.modality === 'Jiu-Jitsu') return '../jiu-jitsu/';
+  if (product.modality === MODALITY.karate) return '../karate/';
+  if (product.modality === MODALITY.jiuJitsu) return '../jiu-jitsu/';
+  if (product.modality === MODALITY.muayThai) return '../muay-thai/';
   return '../';
 }
