@@ -539,7 +539,6 @@ function openWhatsAppRequestMessage(payload, whatsappWindow) {
 function buildWhatsAppMessage(request) {
   const lines = [
     "Nome: " + valueOrDash(request.customerName),
-    "Telefone: " + valueOrDash(request.customerPhone),
     "Modalidade: " + valueOrDash(request.modality),
     "Página: " + valueOrDash(request.landingPage),
     "Campanha: " + valueOrDash(request.campaign),
