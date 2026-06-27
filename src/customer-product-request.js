@@ -112,6 +112,7 @@ const state = {
   step: 1,
   data: {},
   status: REQUEST_STATUS.idle,
+  isAddingProducts: false,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -160,6 +161,7 @@ function bindRequestEvents() {
   });
   document.querySelector('[data-request-back]').addEventListener('click', goBack);
   document.querySelector('[data-request-next]').addEventListener('click', goNext);
+  document.getElementById('customer-request-form').addEventListener('click', handleRequestFormClick);
   document.getElementById('customer-request-form').addEventListener('change', handleFormChange);
 }
 
@@ -170,6 +172,7 @@ function openRequestModal() {
   state.step = 1;
   state.data = {};
   state.status = REQUEST_STATUS.idle;
+  state.isAddingProducts = false;
   document.querySelector('[data-request-next]').disabled = false;
   document.querySelector('.request-actions').style.display = 'flex';
   renderStep();
@@ -178,6 +181,18 @@ function openRequestModal() {
 function closeRequestModal() {
   document.getElementById('customer-request-modal').setAttribute('aria-hidden', 'true');
   document.body.classList.remove('request-modal-open');
+}
+
+function handleRequestFormClick(event) {
+  if (!(event.target instanceof Element)) return;
+
+  const addProductsButton = event.target.closest('[data-request-add-products]');
+  if (!addProductsButton) return;
+
+  saveCurrentStep();
+  state.isAddingProducts = true;
+  state.step = 1;
+  renderStep();
 }
 
 function goBack() {
@@ -209,7 +224,7 @@ function saveCurrentStep() {
     const modality = formData.get(FIELD.modality)?.toString() || '';
     state.data[FIELD.modality] = modality;
 
-    if (previousModality && previousModality !== modality) {
+    if (!state.isAddingProducts && previousModality && previousModality !== modality) {
       state.data[FIELD.productTypes] = [];
       state.data[FIELD.productDetails] = {};
     }
@@ -218,11 +233,15 @@ function saveCurrentStep() {
   }
 
   if (state.step === 2) {
-    const productTypes = formData.getAll(FIELD.productTypes).map(value => value.toString());
+    const selectedProductTypes = formData.getAll(FIELD.productTypes).map(value => value.toString());
+    const productTypes = state.isAddingProducts
+      ? [...new Set([...getSelectedProductTypes(), ...selectedProductTypes])]
+      : selectedProductTypes;
     state.data[FIELD.productTypes] = productTypes;
     state.data[FIELD.productDetails] = Object.fromEntries(
       Object.entries(state.data[FIELD.productDetails] || {}).filter(([productType]) => productTypes.includes(productType))
     );
+    state.isAddingProducts = false;
     return;
   }
 
@@ -314,12 +333,50 @@ function getStepHtml() {
     return renderProductQuestions();
   }
 
+  return renderReviewStep();
+}
+
+function renderReviewStep() {
   return `
+    ${renderSelectedProductsSummary()}
     <label class="request-label">Seu nome<input name="${FIELD.customerName}" value="${state.data[FIELD.customerName] || ''}" required></label>
     <label class="request-label">WhatsApp<input name="${FIELD.customerPhone}" value="${state.data[FIELD.customerPhone] || ''}" inputmode="tel" required></label>
     <label class="request-label">Observações<textarea name="${FIELD.notes}" rows="3">${state.data[FIELD.notes] || ''}</textarea></label>
     ${renderPrivacyConsent()}
     <input class="request-honeypot" name="${FIELD.website}" tabindex="-1" autocomplete="off">
+  `;
+}
+
+function renderSelectedProductsSummary() {
+  const productTypes = getSelectedProductTypes();
+
+  return `
+    <section class="request-selection-summary" aria-label="Produtos selecionados">
+      <div class="request-selection-summary-head">
+        <h3>Produtos selecionados</h3>
+        <button class="request-inline-action" type="button" data-request-add-products>Adicionar mais produtos</button>
+      </div>
+      ${productTypes.length > 0 ? productTypes.map(renderSelectedProductSummaryItem).join('') : '<p class="request-help">Nenhum produto selecionado.</p>'}
+    </section>
+  `;
+}
+
+function renderSelectedProductSummaryItem(productType) {
+  const details = state.data[FIELD.productDetails]?.[productType] || {};
+  const summary = [
+    ['Tamanho', details[FIELD.size]],
+    ['Cor', details[FIELD.color]],
+    ['Altura', details[FIELD.heightCm] ? `${details[FIELD.heightCm]} cm` : ''],
+    ['Peso', details[FIELD.weightKg] ? `${details[FIELD.weightKg]} kg` : ''],
+    ['Idade', details[FIELD.age]],
+    ['Detalhes', details[FIELD.productDetails]],
+  ].filter(([, value]) => value);
+
+  return `
+    <article class="request-selection-item">
+      <strong>${productType}</strong>
+      ${summary.length > 0 ? `<dl>${summary.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl>` : '<span>Sem detalhes adicionais</span>'}
+    </article>
   `;
 }
 
@@ -538,7 +595,10 @@ function openWhatsAppRequestMessage(payload, whatsappWindow) {
 
 function buildWhatsAppMessage(request) {
   const lines = [
+    "Nova consulta no site Morita",
+    "",
     "Nome: " + valueOrDash(request.customerName),
+    "Telefone: " + valueOrDash(request.customerPhone),
     "Modalidade: " + valueOrDash(request.modality),
     "Página: " + valueOrDash(request.landingPage),
     "Campanha: " + valueOrDash(request.campaign),
