@@ -160,6 +160,7 @@ body {
     #random-carousel-container {
       width: 100%;
       display: flex;
+      align-items: center;
       justify-content: center;
       padding: 20px 0 56px;
       margin-top: 1rem;
@@ -167,6 +168,7 @@ body {
     }
 
     .random-products-section {
+      margin-inline: auto;
       text-align: center;
       width: min(100% - 32px, 760px);
     }
